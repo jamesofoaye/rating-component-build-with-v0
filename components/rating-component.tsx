@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { Star } from 'lucide-react'
 
 export default function RatingComponent() {
   const [selectedRating, setSelectedRating] = useState<number | null>(null)
@@ -45,20 +44,23 @@ export default function RatingComponent() {
   return (
     <Card className="w-[327px] md:w-[412px] bg-[hsl(213,19%,18%)] p-8 rounded-[30px]">
       <div className="flex gap-1 mb-6">
-        {[1, 2, 3, 4, 5].map((star) => (
+        {[1, 2, 3, 4, 5].map((index) => (
           <div
-            key={star}
-            className={`bg-[hsl(213,19%,22%)] w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-              star <= (selectedRating || 0) ? 'scale-110' : 'scale-100'
-            }`}
-          >
-            <Star 
-              className={`w-4 h-4 transition-colors duration-300 ${
-                star <= (selectedRating || 0) 
-                  ? 'text-[hsl(25,97%,53%)] fill-[hsl(25,97%,53%)]' 
-                  : 'text-[hsl(216,12%,54%)]'
+            key={index}
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 text-xl ${index <= (selectedRating || 0) ? 'scale-110' : 'scale-100'
               }`}
-            />
+          >
+            {selectedRating ? (
+              <span>
+                {selectedRating === 1 && index === 1 ? '😟' :
+                  selectedRating === 2 && index <= 2 ? '🙁' :
+                    selectedRating === 3 && index <= 3 ? '😐' :
+                      selectedRating === 4 && index <= 4 ? '🙂' :
+                        selectedRating === 5 && index <= 5 ? '😊' : '⭐'}
+              </span>
+            ) : (
+              <span>⭐</span>
+            )}
           </div>
         ))}
       </div>
@@ -74,10 +76,9 @@ export default function RatingComponent() {
             variant="ghost"
             onClick={() => setSelectedRating(rating)}
             className={`w-12 h-12 rounded-full p-0 text-[15px] 
-              ${
-                selectedRating === rating
-                  ? 'bg-[hsl(217,12%,63%)] text-white hover:bg-[hsl(217,12%,63%)]'
-                  : 'bg-[hsl(213,19%,22%)] text-[hsl(217,12%,63%)] hover:bg-[hsl(25,97%,53%)] hover:text-white'
+              ${selectedRating === rating
+                ? 'bg-[hsl(217,12%,63%)] text-white hover:bg-[hsl(217,12%,63%)]'
+                : 'bg-[hsl(213,19%,22%)] text-[hsl(217,12%,63%)] hover:bg-[hsl(25,97%,53%)] hover:text-white'
               }`}
           >
             {rating}

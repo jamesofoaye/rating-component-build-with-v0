@@ -1,7 +1,10 @@
 "use client"
 
-import Page from "../page"
+import Layout from "@/components/layout"
+import RatingComponent from "@/components/rating-component"
 
 export default function SyntheticV0PageForDeployment() {
-  return <Page />
+  <Layout>
+    <RatingComponent />
+  </Layout>
 }
